@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
+<meta content="#0f564a" name="theme-color"/>
+<title>Travel V1.2 · Madère 2026</title>
+<style>
+:root{
+  --bg:#f5f7f4; --card:#ffffff; --ink:#173128; --muted:#60736b;
+  --accent:#167c68; --accent2:#e9b96e; --line:#dce6e1; --shadow:0 10px 30px rgba(20,50,40,.10);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.55}
+.hero{min-height:52vh;padding:64px 22px 40px;background:linear-gradient(145deg,#0f564a,#1d8871);color:#fff;display:flex;align-items:flex-end}
+.hero-inner{max-width:860px;margin:auto;width:100%}
+.kicker{font-size:.85rem;letter-spacing:.12em;text-transform:uppercase;opacity:.85}
+h1{font-size:clamp(2.35rem,8vw,5rem);line-height:.98;margin:.4rem 0 1rem}
+.hero p{max-width:650px;font-size:1.08rem;opacity:.94}
+.hero-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.hero-tags span{background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.24);padding:8px 11px;border-radius:999px;font-size:.86rem}
+.sticky{position:sticky;top:0;z-index:10;background:rgba(245,247,244,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);overflow-x:auto}
+.days-nav{display:flex;gap:8px;max-width:980px;margin:auto;padding:10px 14px;white-space:nowrap}
+.days-nav a{color:var(--ink);text-decoration:none;background:#fff;border:1px solid var(--line);padding:8px 11px;border-radius:12px;font-weight:700;font-size:.83rem}
+main{max-width:920px;margin:auto;padding:28px 14px 80px}
+.summary{background:#fff;border-radius:20px;padding:20px;box-shadow:var(--shadow);margin-bottom:24px}
+.summary h2{margin-top:0}
+.summary-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.summary-grid div{background:#f2f7f5;border-radius:14px;padding:12px}
+.day{background:var(--card);border-radius:22px;margin:0 0 22px;overflow:hidden;box-shadow:var(--shadow);border:1px solid rgba(220,230,225,.8)}
+.day-head{padding:22px;background:linear-gradient(135deg,#fff,#eff7f4);border-bottom:1px solid var(--line)}
+.day-num{font-size:.82rem;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);font-weight:800}
+.day h2{margin:.25rem 0 .4rem;font-size:1.7rem;line-height:1.12}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.badge{border-radius:999px;padding:6px 10px;background:#e8f4f0;color:#0b6354;font-size:.8rem;font-weight:750}
+.hotel{background:#fbf1de;color:#7b5724}
+.intro{color:var(--muted);margin-bottom:0}
+.day-body{padding:20px}
+.timeline{display:grid;gap:10px;margin:14px 0 22px}
+.timeline-row{display:grid;grid-template-columns:92px 1fr;gap:12px;padding:12px;border-radius:14px;background:#f7faf9;border:1px solid #e6eeea}
+.timeline-row strong{color:var(--accent)}
+.info-grid{display:grid;grid-template-columns:1fr;gap:12px}
+.info{border:1px solid var(--line);border-radius:15px;padding:14px}
+.info h3{font-size:.96rem;margin:0 0 7px}
+.info p{margin:0;color:#40564e}
+.ratings{margin-top:14px;padding:12px 14px;border-radius:14px;background:#173128;color:white;font-weight:700;font-size:.9rem}
+details{margin-top:15px;border-top:1px solid var(--line);padding-top:12px}
+summary{cursor:pointer;color:var(--accent);font-weight:800}
+footer{padding:30px 18px 50px;text-align:center;color:var(--muted)}
+.top-btn{position:fixed;right:16px;bottom:16px;width:46px;height:46px;border-radius:50%;border:0;background:#173128;color:white;font-size:1.2rem;box-shadow:var(--shadow);cursor:pointer}
+@media(min-width:720px){
+ .summary-grid{grid-template-columns:repeat(4,1fr)}
+ .info-grid{grid-template-columns:repeat(2,1fr)}
+ .day-head,.day-body{padding:26px}
+}
+@media print{
+ .sticky,.top-btn{display:none}.day{break-inside:avoid;box-shadow:none}.hero{min-height:auto}
+}
+
+.day-photo{position:relative;aspect-ratio:16/8;overflow:hidden;background:#dfe9e5}
+.day-photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease}
+.day:hover .day-photo img{transform:scale(1.015)}
+.day-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 58%,rgba(10,35,28,.46))}
+.day-photo span{position:absolute;left:16px;right:16px;bottom:12px;color:#fff;font-size:.82rem;font-weight:750;text-shadow:0 1px 6px rgba(0,0,0,.55)}
+.map-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.map-link{display:inline-flex;align-items:center;gap:6px;text-decoration:none;background:#0f6f5f;color:white;padding:9px 12px;border-radius:12px;font-size:.82rem;font-weight:800}
+.map-link.secondary{background:#fff;color:#0f6f5f;border:1px solid #b9d8cf}
+.restaurant-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+@media(max-width:520px){.day-photo{aspect-ratio:16/9}.map-link{width:100%;justify-content:center}}
+
+
+.clean-photo::after{display:none!important}
+.clean-photo span{display:none!important}
+.clean-photo img{transform:none!important}
+
+.photo-fallback{background:linear-gradient(135deg,#0f564a,#68a897);min-height:260px}
+/* === Travel V1.2 === */
+.quickdash{background:linear-gradient(145deg,#173128,#245b4c);color:#fff;border-radius:24px;padding:20px;margin:0 0 22px;box-shadow:0 16px 40px rgba(15,50,40,.18)}
+.quickdash-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.quickdash h2{margin:.15rem 0 .8rem;font-size:1.45rem}
+.eyebrow2{text-transform:uppercase;letter-spacing:.13em;font-size:.72rem;opacity:.72;font-weight:800}
+.today-btn{border:0;border-radius:14px;background:#fff;color:#173128;padding:10px 13px;font-weight:850;white-space:nowrap}
+.quickstats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0}
+.quickstats div{background:#ffffff12;border:1px solid #ffffff22;border-radius:13px;padding:10px 7px;text-align:center}
+.quickstats b{display:block;font-size:1.15rem}.quickstats span{display:block;font-size:.69rem;opacity:.78}
+.filterbar{display:flex;gap:7px;overflow:auto;padding:3px 0 6px;-webkit-overflow-scrolling:touch}
+.filterbar button{border:1px solid #ffffff2d;background:#ffffff12;color:#fff;border-radius:999px;padding:8px 11px;font-size:.78rem;font-weight:800;white-space:nowrap}
+.filterbar button.active{background:#fff;color:#173128}
+.quicknote{font-size:.82rem;opacity:.82;margin:9px 0 0}
+.day{scroll-margin-top:72px;transition:opacity .2s,transform .2s}
+.day.hidden-filter{display:none}
+.day-photo{position:relative;min-height:240px;background:#dfe9e4;overflow:hidden}
+.day-photo img{width:100%;height:clamp(250px,52vw,430px);object-fit:cover;display:block}
+.day-photo:after{content:"";position:absolute;inset:auto 0 0;height:30%;background:linear-gradient(transparent,rgba(0,0,0,.18));pointer-events:none}
+.day-head{position:relative}
+.day-actions{display:flex;gap:8px;margin-top:14px}
+.day-actions button,.day-actions a{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:11px;padding:8px 10px;font-size:.76rem;font-weight:800;text-decoration:none}
+.day.collapsed .day-body{display:none}
+.hero-chip{display:inline-flex;align-items:center;padding:7px 10px;border-radius:999px;background:#fff;color:#173128;font-size:.78rem;font-weight:900}
+.half-board,.overview{border-left:5px solid var(--accent2)}
+.map-link{box-shadow:0 6px 16px rgba(22,124,104,.16)}
+@media(max-width:520px){
+  .quickdash-head{align-items:center}
+  .quickstats{grid-template-columns:repeat(2,1fr)}
+  .day-photo img{height:270px}
+}
+</style>
+<link href='data:application/manifest+json,{"name":%20"Travel%20—%20Madère%202026",%20"short_name":%20"Travel",%20"start_url":%20"./",%20"display":%20"standalone",%20"background_color":%20"#f5f7f4",%20"theme_color":%20"#0f564a"}' rel="manifest"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Travel" name="apple-mobile-web-app-title"/>
+</head>
+<body>
+<header class="hero" id="top">
+<div class="hero-inner">
+<div class="kicker">Travel · Madère 2026</div>
+<h1>Madère<br/>2026</h1>
+<p>Le programme détaillé de Gregorio, Morgane et Sofia-Rosa, du 8 au 24 août, construit autour de votre cycle famille → demi-journée → journée couple.</p>
+<div class="hero-tags">
+<span>🚗 Voiture pendant tout le séjour</span>
+<span>👧 Sans poussette</span>
+<span>🏖️ Mer/piscine ≤ 2 h 30</span>
+<span>🏃 Runs 5–10 km</span>
+<span>🥾 Trails ≤ 8 km</span>
+<span>🏋️ 2 CrossFit/semaine visés</span>
+<span class="hero-chip">✨ V1.2</span></div>
+</div>
+</header>
+<nav class="sticky"><div class="days-nav"><a href="#day-1">8 août</a><a href="#day-2">9 août</a><a href="#day-3">10 août</a><a href="#day-4">11 août</a><a href="#day-5">12 août</a><a href="#day-6">13 août</a><a href="#day-7">14 août</a><a href="#day-8">15 août</a><a href="#day-9">16 août</a><a href="#day-10">17 août</a><a href="#day-11">18 août</a><a href="#day-12">19 août</a><a href="#day-13">20 août</a><a href="#day-14">21 août</a><a href="#day-15">22 août</a><a href="#day-16">23 août</a><a href
