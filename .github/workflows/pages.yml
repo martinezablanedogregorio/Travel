@@ -17,12 +17,36 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Rebuild photo JPEG as a real binary
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import base64, re
+
+          source = Path('assets/days-sprite.b64')
+          target = Path('assets/days-sprite.jpg')
+          raw = re.sub(r'\s+', '', source.read_text(encoding='utf-8'))
+          data = base64.b64decode(raw, validate=True)
+
+          if not data.startswith(b'\xff\xd8'):
+              raise SystemExit('Invalid JPEG: missing SOI marker')
+          if not data.endswith(b'\xff\xd9'):
+              raise SystemExit('Invalid JPEG: missing EOI marker')
+
+          target.write_bytes(data)
+          print(f'JPEG rebuilt successfully: {len(data)} bytes')
+          PY
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
+
       - name: Upload site
         uses: actions/upload-pages-artifact@v3
         with:
           path: .
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
